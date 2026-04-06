@@ -1,9 +1,9 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: rivera-deployment
+  name: rivera-app
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: rivera
@@ -14,7 +14,8 @@ spec:
     spec:
       containers:
       - name: rivera-container
-        image: rivera-app:latest
+        # CHANGE 'your_docker_username' TO YOUR ACTUAL USERNAME
+        image: your_docker_username/rivera-web-app:latest 
         ports:
         - containerPort: 80
 ---
@@ -29,5 +30,4 @@ spec:
   ports:
     - port: 80
       targetPort: 80
-      nodePort: 30007 # Access the site at http://<node-ip>:30007
-
+      nodePort: 30007 # This is the port you will use to view the site
