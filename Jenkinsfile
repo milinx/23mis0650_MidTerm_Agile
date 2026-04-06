@@ -33,11 +33,14 @@ pipeline {
         stage('K8s Deployment') {
             steps {
                 script {
-                    // Using powershell for the text replacement on Windows
+                    // 1. Swap the image tag
                     powershell "(Get-Content deployment.yaml) -replace 'IMAGE_PLACEHOLDER', '${FULL_IMAGE}' | Set-Content deployment.yaml"
-                    bat "kubectl apply -f deployment.yaml"
+                    
+                    // 2. Point kubectl to your config file (Change 'YourUser' to your Windows username)
+                    bat 'kubectl --kubeconfig="C:/Users/YourUser/.kube/config" apply -f deployment.yaml'
                 }
             }
         }
+
     }
 }
