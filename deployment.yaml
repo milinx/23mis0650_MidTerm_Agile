@@ -15,7 +15,7 @@ spec:
       containers:
       - name: rivera-container
         # CHANGE 'your_docker_username' TO YOUR ACTUAL USERNAME
-        image: your_docker_username/rivera-web-app:latest 
+        image: IMAGE_PLACEHOLDER
         ports:
         - containerPort: 80
 ---
