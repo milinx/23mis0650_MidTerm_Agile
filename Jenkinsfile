@@ -17,13 +17,18 @@ pipeline {
         stage('Docker Build & Push') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'docker-hub-creds', passwordVariable: 'PASS', usernameVariable: 'USER')]) {
-                    // Use 'bat' for Windows commands
+                    // 1. Build the image
                     bat "docker build -t ${FULL_IMAGE} ."
-                    bat "echo %PASS% | docker login -u %USER% --password-stdin"
+                    
+                    // 2. Login using the -p flag (Better for Windows Batch)
+                    bat "docker login -u %USER% -p %PASS%"
+                    
+                    // 3. Push the image
                     bat "docker push ${FULL_IMAGE}"
                 }
             }
         }
+
 
         stage('K8s Deployment') {
             steps {
